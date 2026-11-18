@@ -17,31 +17,27 @@ export default function HeroAnimation() {
         ref={sectionRef}
         className="sticky top-0 w-full h-screen bg-blue-600 text-alabaster flex flex-col justify-between px-4 sm:px-12 md:px-20 py-6 sm:py-12 select-none overflow-hidden"
       >
-        {/* Wavy Top Divider SVG (Fixed seam line with -translate-y-[1px]) */}
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-none z-10 pointer-events-none -translate-y-[1px]">
-          <svg
-            className="relative block w-full h-10 sm:h-20 text-[#FAF6EE]"
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0,0 C150,90 350,-40 500,45 C650,130 900,10 1200,40 L1200,0 L0,0 Z"
-              fill="#FAF6EE"
-            ></path>
-          </svg>
-        </div>
+        {/* Clean Wave Divider Background */}
+        <div 
+          className="absolute top-0 left-0 w-full h-12 sm:h-24 z-10 pointer-events-none -mt-[1px]"
+          style={{
+            background: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0 C150,90 350,-40 500,45 C650,130 900,10 1200,40 L1200,0 L0,0 Z' fill='%23FAF6EE'/%3E%3C/svg%3E")`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: '100% 100%'
+          }}
+        />
 
         {/* Bright Light Transition Overlay */}
         <div className="flash-overlay absolute inset-0 bg-[#FAF6EE] z-40 opacity-0 will-change-[opacity]" />
 
         {/* Top Atelier Subheading */}
-        <div className="top-subtitle w-full flex justify-center items-center pt-3 sm:pt-4 relative z-20">
-          <span className="font-mono text-[10px] sm:text-sm font-extrabold tracking-[0.25em] sm:tracking-[0.3em] uppercase text-amber-400">
-            THE ATELIER
+        <div className="top-subtitle w-full flex justify-center items-center pt-6 sm:pt-8 relative z-20">
+          <span className="font-mono text-[10px] sm:text-sm font-extrabold tracking-[0.25em] sm:tracking-[0.3em] uppercase text-black">
+            GEGS
           </span>
         </div>
 
-        {/* Center Stage: Optimized Mobile Stack vs Desktop Row */}
+        {/* Center Stage: Layout */}
         <div className="relative w-full flex-1 flex flex-col md:flex-row items-center justify-center md:justify-between max-w-7xl mx-auto px-2 sm:px-4 z-20 gap-2 sm:gap-6 my-auto">
           
           {/* Left Typography */}
@@ -51,26 +47,26 @@ export default function HeroAnimation() {
             </h2>
           </div>
 
-          {/* Central Emblem & Interactive Petal Badges */}
-          <div className="hero-emblem-container relative flex items-center justify-center w-36 h-36 sm:w-72 sm:h-72 md:w-80 md:h-80 mx-auto z-20 will-change-transform my-1 md:my-0">
+          {/* Central Emblem & Flowing Petal Badges */}
+          <div className="hero-emblem-container relative flex items-center justify-center w-28 h-28 sm:w-72 sm:h-72 md:w-80 md:h-80 mx-auto z-20 will-change-transform my-1 md:my-0">
             <img
               src={emblem}
               alt="GEGS Emblem"
               className="hero-emblem w-full h-full object-contain drop-shadow-2xl"
             />
             
-            {/* Petal Badges */}
-            <div className="petal-badge absolute -top-1 -left-3 sm:-top-4 sm:-left-8 bg-alabaster text-charcoal px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full font-mono text-[8px] sm:text-xs font-extrabold tracking-wider shadow-[2px_2px_0px_#141413] sm:shadow-[3px_3px_0px_#141413] border-[1.5px] border-charcoal will-change-[transform,opacity]">
+            {/* Petal Badges positioned at center for GSAP stagger-out */}
+            <div className="petal-badge badge-top-left absolute z-30 bg-alabaster text-charcoal px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full font-mono text-[8px] sm:text-xs font-extrabold tracking-wider shadow-[2px_2px_0px_#141413] sm:shadow-[3px_3px_0px_#141413] border-[1.5px] border-charcoal will-change-[transform,opacity] whitespace-nowrap">
               LOOKBOOK
             </div>
-            <div className="petal-badge absolute -top-1 -right-2 sm:-top-4 sm:-right-6 bg-amber-500 text-charcoal px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full font-mono text-[8px] sm:text-xs font-extrabold tracking-wider shadow-[2px_2px_0px_#141413] sm:shadow-[3px_3px_0px_#141413] border-[1.5px] border-charcoal will-change-[transform,opacity]">
+            <div className="petal-badge badge-top-right absolute z-30 bg-amber-500 text-charcoal px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full font-mono text-[8px] sm:text-xs font-extrabold tracking-wider shadow-[2px_2px_0px_#141413] sm:shadow-[3px_3px_0px_#141413] border-[1.5px] border-charcoal will-change-[transform,opacity] whitespace-nowrap">
               11 MILLS
             </div>
-            <div className="petal-badge absolute -bottom-1 -left-2 sm:-bottom-2 sm:-left-6 bg-amber-500 text-charcoal px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full font-mono text-[8px] sm:text-xs font-extrabold tracking-wider shadow-[2px_2px_0px_#141413] sm:shadow-[3px_3px_0px_#141413] border-[1.5px] border-charcoal will-change-[transform,opacity]">
+            <div className="petal-badge badge-bottom-left absolute z-30 bg-amber-500 text-charcoal px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full font-mono text-[8px] sm:text-xs font-extrabold tracking-wider shadow-[2px_2px_0px_#141413] sm:shadow-[3px_3px_0px_#141413] border-[1.5px] border-charcoal will-change-[transform,opacity] whitespace-nowrap">
               LAGOS
             </div>
-            <div className="petal-badge absolute -bottom-1 -right-3 sm:-bottom-2 sm:-right-8 bg-alabaster text-charcoal px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full font-mono text-[8px] sm:text-xs font-extrabold tracking-wider shadow-[2px_2px_0px_#141413] sm:shadow-[3px_3px_0px_#141413] border-[1.5px] border-charcoal will-change-[transform,opacity]">
-              EST. 2025
+            <div className="petal-badge badge-bottom-right absolute z-30 bg-alabaster text-charcoal px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full font-mono text-[8px] sm:text-xs font-extrabold tracking-wider shadow-[2px_2px_0px_#141413] sm:shadow-[3px_3px_0px_#141413] border-[1.5px] border-charcoal will-change-[transform,opacity] whitespace-nowrap">
+              EST. 2021
             </div>
           </div>
 
