@@ -32,8 +32,8 @@ export default function HeroAnimation() {
 
         {/* Top Atelier Subheading */}
         <div className="top-subtitle w-full flex justify-center items-center pt-6 sm:pt-8 relative z-20">
-          <span className="font-mono text-[10px] sm:text-sm font-extrabold tracking-[0.25em] sm:tracking-[0.3em] uppercase text-black">
-            GEGS
+          <span className="font-mono text-[10px] sm:text-sm font-extrabold tracking-[0.25em] sm:tracking-[0.3em] uppercase text-amber-400">
+            THE ATELIER
           </span>
         </div>
 
@@ -41,14 +41,14 @@ export default function HeroAnimation() {
         <div className="relative w-full flex-1 flex flex-col md:flex-row items-center justify-center md:justify-between max-w-7xl mx-auto px-2 sm:px-4 z-20 gap-2 sm:gap-6 my-auto">
           
           {/* Left Typography */}
-          <div className="side-title-left z-10 w-full md:max-w-xs text-center md:text-left will-change-[transform,opacity]">
+          <div className="side-title-left z-10 w-full md:max-w-md text-center md:text-left will-change-[transform,opacity]">
             <h2 className="font-display font-black text-3xl sm:text-6xl md:text-7xl uppercase leading-none tracking-tight text-white drop-shadow-md">
               BESPOKE <br className="hidden md:block" /> TAILORING
             </h2>
           </div>
 
           {/* Central Emblem & Flowing Petal Badges */}
-          <div className="hero-emblem-container relative flex items-center justify-center w-28 h-28 sm:w-72 sm:h-72 md:w-80 md:h-80 mx-auto z-20 will-change-transform my-1 md:my-0">
+          <div className="hero-emblem-container relative flex items-center justify-center w-36 h-36 sm:w-72 sm:h-72 md:w-[420px] md:h-[420px] mx-auto z-20 will-change-transform my-1 md:my-0">
             <img
               src={emblem}
               alt="GEGS Emblem"
@@ -66,12 +66,12 @@ export default function HeroAnimation() {
               LAGOS
             </div>
             <div className="petal-badge badge-bottom-right absolute z-30 bg-alabaster text-charcoal px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full font-mono text-[8px] sm:text-xs font-extrabold tracking-wider shadow-[2px_2px_0px_#141413] sm:shadow-[3px_3px_0px_#141413] border-[1.5px] border-charcoal will-change-[transform,opacity] whitespace-nowrap">
-              EST. 2021
+              EST. 2025
             </div>
           </div>
 
           {/* Right Typography */}
-          <div className="side-title-right z-10 w-full md:max-w-xs text-center md:text-right will-change-[transform,opacity]">
+          <div className="side-title-right z-10 w-full md:max-w-md text-center md:text-right will-change-[transform,opacity]">
             <h2 className="font-display font-black text-3xl sm:text-6xl md:text-7xl uppercase leading-none tracking-tight text-white drop-shadow-md">
               ARTISANAL <br className="hidden md:block" /> TEXTILES
             </h2>
