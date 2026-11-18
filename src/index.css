@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --color-alabaster: #f6f3ec;
+  --color-charcoal: #141413;
+  --color-ink: #020617;
+  --color-accent-gold: #c88a1e;
+
+  /* Typography - using Plus Jakarta Sans for both sans and serif fallbacks */
+  --font-serif: "Plus Jakarta Sans", sans-serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-display: "Anton", sans-serif;
+  --font-mono: "Space Mono", monospace;
+
+/* Custom Brutalist Shadows for v4 */
+  --shadow-brutalist: 8px 8px 0px #141413;
+  --shadow-brutalist-md: 6px 6px 0px #141413;
+  --shadow-brutalist-sm: 3px 3px 0px #141413;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-alabaster);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+}
+
+@utility neo-box {
+  border: 1.5px solid var(--color-charcoal);
+  box-shadow: var(--shadow-brutalist);
+}
