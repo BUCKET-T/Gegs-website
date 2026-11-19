@@ -11,6 +11,8 @@ import {
   dropdownMenuMotion,
 } from '../animations/ConsultationModalMotion';
 
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/meagzndy';
+
 function SocialPlatformIcon({ name }) {
   switch (name) {
     case 'INSTAGRAM':
@@ -143,6 +145,8 @@ export default function ConsultationModal({
   const [service, setService] = useState(defaultService);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [vision, setVision] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
@@ -164,9 +168,43 @@ export default function ConsultationModal({
     return initConsultationModalAnimations(sectionRef, topRibbonTrackRef, bottomRibbonTrackRef);
   }, [isOpen]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (submitting) return;
+
+    setSubmitting(true);
+    setErrorMsg('');
+
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: fullName,
+          email,
+          service,
+          vision,
+        }),
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        const message =
+          data?.errors?.map((err) => err.message).join(', ') ||
+          'Could not send your inquiry. Please try again.';
+        throw new Error(message);
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setErrorMsg(err?.message || 'Network error while sending inquiry.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const ribbonSegments = Array.from({ length: 5 }, (_, idx) => idx);
@@ -243,7 +281,7 @@ export default function ConsultationModal({
                         className="mt-6 p-5 rounded-2xl bg-[#FAF6EE] border-2 border-[#141413] shadow-[4px_4px_0px_#141413]"
                       >
                         <p className="font-mono text-xs font-extrabold tracking-[0.18em] uppercase text-blue-600">
-                          INQUIRY LOGGED // LAGOS ATELIER
+                          INQUIRY LOGGED // OGUN ATELIER
                         </p>
                         <h3 className="font-display font-black text-xl uppercase mt-1">
                           WE HAVE YOUR BRIEF{fullName ? `, ${fullName}` : ''}.
@@ -255,6 +293,7 @@ export default function ConsultationModal({
                           type="button"
                           onClick={() => {
                             setSubmitted(false);
+                            setErrorMsg('');
                             setFullName('');
                             setEmail('');
                             setVision('');
@@ -265,7 +304,12 @@ export default function ConsultationModal({
                         </button>
                       </motion.div>
                     ) : (
-                      <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+                      <form
+                        action={FORMSPREE_ENDPOINT}
+                        method="POST"
+                        onSubmit={handleSubmit}
+                        className="mt-6 space-y-4"
+                      >
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div>
                             <label
@@ -276,6 +320,7 @@ export default function ConsultationModal({
                             </label>
                             <input
                               id="inquiry-name"
+                              name="name"
                               type="text"
                               required
                               value={fullName}
@@ -294,6 +339,7 @@ export default function ConsultationModal({
                             </label>
                             <input
                               id="inquiry-email"
+                              name="email"
                               type="email"
                               required
                               value={email}
@@ -386,6 +432,7 @@ export default function ConsultationModal({
                           </label>
                           <textarea
                             id="inquiry-vision"
+                            name="vision"
                             rows={4}
                             required
                             value={vision}
@@ -395,13 +442,23 @@ export default function ConsultationModal({
                           />
                         </div>
 
+                        {errorMsg && (
+                          <p
+                            role="alert"
+                            className="p-3 rounded-xl bg-red-100 border-2 border-[#141413] font-mono text-xs font-bold text-red-900"
+                          >
+                            {errorMsg}
+                          </p>
+                        )}
+
                         <div className="pt-2 flex justify-end">
                           <motion.button
                             type="submit"
+                            disabled={submitting}
                             {...submitButtonMotion}
-                            className="px-7 py-3.5 rounded-full bg-[#141413] text-[#FAF6EE] font-mono text-xs font-extrabold tracking-[0.18em] uppercase border-2 border-[#141413] shadow-[4px_4px_0px_#141413] flex items-center gap-2 cursor-pointer"
+                            className="px-7 py-3.5 rounded-full bg-[#141413] text-[#FAF6EE] font-mono text-xs font-extrabold tracking-[0.18em] uppercase border-2 border-[#141413] shadow-[4px_4px_0px_#141413] flex items-center gap-2 cursor-pointer disabled:opacity-60"
                           >
-                            <span>SEND INQUIRY</span>
+                            <span>{submitting ? 'SENDING...' : 'SEND INQUIRY'}</span>
                             <span aria-hidden="true">→</span>
                           </motion.button>
                         </div>
@@ -425,7 +482,7 @@ export default function ConsultationModal({
 
                     <div className="mt-4 flex items-center gap-2.5 font-mono text-xs font-bold leading-snug text-[#141413]">
                       <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 border border-[#141413] shrink-0" />
-                      <span>3 consultation slots this week</span>
+                      <span>5 consultation slots this week</span>
                     </div>
 
                     <div className="my-5 border-t-2 border-[#141413]" />
@@ -433,7 +490,7 @@ export default function ConsultationModal({
                     <dl className="space-y-2.5 font-mono text-xs text-[#141413]">
                       <div className="flex items-center justify-between gap-2">
                         <dt className="font-bold">Mon - Fri</dt>
-                        <dd className="font-extrabold">09:00 - 18:00</dd>
+                        <dd className="font-extrabold">07:00 - 20:00</dd>
                       </div>
                       <div className="flex items-center justify-between gap-2">
                         <dt className="font-bold">Saturday</dt>
@@ -447,7 +504,7 @@ export default function ConsultationModal({
                   </div>
 
                   <p className="mt-8 pt-4 font-serif italic text-xs sm:text-sm leading-snug text-[#141413]/90">
-                    14 Adeola Odeku Street, Victoria Island, Lagos.
+                    14 Adeola Odeku Street, Mowe, Ogun State.
                   </p>
                 </motion.aside>
               </div>
