@@ -10,7 +10,8 @@ export default function GegsIntro() {
     slideInFromRight,
     centerToggleVariants,
   } = useGegsIntroAnimations();
-
+  const currentYear = new Date().getFullYear();
+  
   return (
     <motion.section
       variants={containerVariants}
@@ -91,7 +92,7 @@ export default function GegsIntro() {
         >
           <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-emerald-600 animate-pulse shrink-0" />
           <span className="font-mono text-[10px] sm:text-xs font-bold tracking-[0.14em] sm:tracking-[0.16em] uppercase text-charcoal">
-            Accepting Fittings for Autumn 2025
+            Accepting Fittings for Autumn {currentYear}
           </span>
         </motion.div>
 

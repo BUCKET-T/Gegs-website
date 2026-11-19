@@ -33,7 +33,7 @@ export default function HeroAnimation() {
         {/* Top Atelier Subheading */}
         <div className="top-subtitle w-full flex justify-center items-center pt-6 sm:pt-8 relative z-20">
           <span className="font-mono text-[10px] sm:text-sm font-extrabold tracking-[0.25em] sm:tracking-[0.3em] uppercase text-amber-400">
-            THE ATELIER
+            GEGS
           </span>
         </div>
 
@@ -66,7 +66,7 @@ export default function HeroAnimation() {
               LAGOS
             </div>
             <div className="petal-badge badge-bottom-right absolute z-30 bg-alabaster text-charcoal px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full font-mono text-[8px] sm:text-xs font-extrabold tracking-wider shadow-[2px_2px_0px_#141413] sm:shadow-[3px_3px_0px_#141413] border-[1.5px] border-charcoal will-change-[transform,opacity] whitespace-nowrap">
-              EST. 2025
+              EST. 2024
             </div>
           </div>
 
