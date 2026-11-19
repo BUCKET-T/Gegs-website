@@ -59,9 +59,9 @@ function SocialPlatformIcon({ name }) {
 
 const SOCIAL_LINKS = [
   { name: 'INSTAGRAM', href: 'https://www.instagram.com/__gegs?cnvx=MTFyYnJvaWJjeWtrZA==', accent: 'bg-amber-400 text-[#141413]' },
-  { name: 'PINTEREST', href: '#pinterest', accent: 'bg-[#FAF6EE] text-[#141413]' },
+  { name: 'PINTEREST', href: 'https://www.pinterest.com', accent: 'bg-[#FAF6EE] text-[#141413]' },
   { name: 'WHATSAPP', href: 'https://wa.me/2348067951762', accent: 'bg-blue-600 text-white' },
-  { name: 'EMAIL', href: 'mailto:atelier@gegsstudio.com', accent: 'bg-[#FAF6EE] text-[#141413]' },
+  { name: 'EMAIL', href: 'mailto:emmanuelgegs@gmail.com', accent: 'bg-[#FAF6EE] text-[#141413]' },
 ];
 
 const SERVICE_OPTIONS = [
