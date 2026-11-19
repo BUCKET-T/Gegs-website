@@ -1,6 +1,7 @@
 import HeroAnimation from '../components/HeroAnimation';
 import PreloaderNavbar from '../components/PreloaderNavbar';
 import GegsIntro from '../components/GegsIntro';
+import Lookbook from '../components/Lookbook';
 
 export default function Operator() {
   return (
@@ -8,6 +9,7 @@ export default function Operator() {
       <PreloaderNavbar />
       <GegsIntro />
       <HeroAnimation />
+      <Lookbook />
     </div>
   );
 }
