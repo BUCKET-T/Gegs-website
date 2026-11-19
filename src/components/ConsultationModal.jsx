@@ -1,9 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import {
+  initConsultationModalAnimations,
+  modalBackdropMotion,
+  followStudioMotion,
+  inquiryCardMotion,
+  availabilityCardMotion,
+  socialPillMotion,
+  submitButtonMotion,
+  dropdownMenuMotion,
+} from '../animations/ConsultationModalMotion';
 
 function SocialPlatformIcon({ name }) {
   switch (name) {
@@ -153,47 +159,9 @@ export default function ConsultationModal({
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
 
-  // GSAP ScrollTrigger for crossing, opposite-direction oversized ribbons
   useEffect(() => {
     if (!isOpen) return;
-
-    const ctx = gsap.context(() => {
-      const section = sectionRef.current;
-      const topTrack = topRibbonTrackRef.current;
-      const bottomTrack = bottomRibbonTrackRef.current;
-      if (!section || !topTrack || !bottomTrack) return;
-
-      gsap.set(topTrack, { xPercent: -8, force3D: true });
-      gsap.set(bottomTrack, { xPercent: -36, force3D: true });
-
-      gsap.to(topTrack, {
-        xPercent: -38,
-        ease: 'none',
-        force3D: true,
-        scrollTrigger: {
-          trigger: section,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1.4,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      gsap.to(bottomTrack, {
-        xPercent: -6,
-        ease: 'none',
-        force3D: true,
-        scrollTrigger: {
-          trigger: section,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1.4,
-          invalidateOnRefresh: true,
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
+    return initConsultationModalAnimations(sectionRef, topRibbonTrackRef, bottomRibbonTrackRef);
   }, [isOpen]);
 
   const handleSubmit = (e) => {
@@ -208,10 +176,7 @@ export default function ConsultationModal({
       {isOpen && (
         <motion.div
           id="contact"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          {...modalBackdropMotion}
           className="relative w-full bg-[#FAF6EE] text-[#141413] overflow-x-clip pt-12 sm:pt-16 pb-28 sm:pb-36 select-none"
         >
           <div ref={sectionRef} className="relative w-full">
@@ -230,14 +195,10 @@ export default function ConsultationModal({
                 </div>
               )}
 
-              {/* Main 3-Column Atelier Consultation Grid */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-7 items-stretch">
-                {/* 1. FOLLOW THE STUDIO: Enters deliberately from the left */}
+                {/* 1. FOLLOW THE STUDIO */}
                 <motion.aside
-                  initial={{ opacity: 0, x: -90 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+                  {...followStudioMotion}
                   className="lg:col-span-3 flex flex-col justify-start gap-4 pt-1"
                 >
                   <p className="font-mono text-[11px] font-extrabold tracking-[0.22em] uppercase text-[#141413]/85">
@@ -251,9 +212,7 @@ export default function ConsultationModal({
                         href={item.href}
                         target={item.href.startsWith('http') ? '_blank' : undefined}
                         rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        whileHover={{ x: 3, y: -2, boxShadow: '6px 6px 0px #141413' }}
-                        whileTap={{ x: 2, y: 2, boxShadow: '2px 2px 0px #141413' }}
-                        transition={{ type: 'spring', stiffness: 420, damping: 28 }}
+                        {...socialPillMotion}
                         className={`w-full px-5 py-3.5 rounded-full ${item.accent} border-[2.5px] border-[#141413] shadow-[4px_4px_0px_#141413] flex items-center gap-3 font-mono text-xs font-extrabold tracking-[0.18em] uppercase`}
                       >
                         <SocialPlatformIcon name={item.name} />
@@ -263,12 +222,9 @@ export default function ConsultationModal({
                   </div>
                 </motion.aside>
 
-                {/* 2. START AN INQUIRY: Flows slowly into position from beneath */}
+                {/* 2. START AN INQUIRY */}
                 <motion.div
-                  initial={{ opacity: 0, y: 105 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 1.05, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  {...inquiryCardMotion}
                   className="lg:col-span-6 bg-white rounded-[28px] border-[2.5px] border-[#141413] shadow-[8px_8px_0px_#141413] p-6 sm:p-8 flex flex-col justify-between"
                 >
                   <div>
@@ -348,7 +304,6 @@ export default function ConsultationModal({
                           </div>
                         </div>
 
-                        {/* Neo-Brutalist Custom Service Dropdown */}
                         <div ref={dropdownRef} className="relative">
                           <label
                             htmlFor="inquiry-service-btn"
@@ -388,10 +343,7 @@ export default function ConsultationModal({
                               <motion.ul
                                 role="listbox"
                                 aria-label="Service options"
-                                initial={{ opacity: 0, y: -8, scale: 0.98 }}
-                                animate={{ opacity: 1, y: 4, scale: 1 }}
-                                exit={{ opacity: 0, y: -6, scale: 0.98 }}
-                                transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                                {...dropdownMenuMotion}
                                 className="absolute left-0 right-0 z-30 mt-1 rounded-2xl bg-[#FAF6EE] border-[2.5px] border-[#141413] shadow-[6px_6px_0px_#141413] p-1.5 space-y-1"
                               >
                                 {SERVICE_OPTIONS.map((opt) => {
@@ -446,9 +398,7 @@ export default function ConsultationModal({
                         <div className="pt-2 flex justify-end">
                           <motion.button
                             type="submit"
-                            whileHover={{ y: -2, boxShadow: '6px 6px 0px #2563EB' }}
-                            whileTap={{ x: 2, y: 2, boxShadow: '2px 2px 0px #141413' }}
-                            transition={{ type: 'spring', stiffness: 420, damping: 28 }}
+                            {...submitButtonMotion}
                             className="px-7 py-3.5 rounded-full bg-[#141413] text-[#FAF6EE] font-mono text-xs font-extrabold tracking-[0.18em] uppercase border-2 border-[#141413] shadow-[4px_4px_0px_#141413] flex items-center gap-2 cursor-pointer"
                           >
                             <span>SEND INQUIRY</span>
@@ -460,12 +410,9 @@ export default function ConsultationModal({
                   </div>
                 </motion.div>
 
-                {/* 3. STUDIO AVAILABILITY: Flows slowly from the right after FOLLOW THE STUDIO */}
+                {/* 3. STUDIO AVAILABILITY */}
                 <motion.aside
-                  initial={{ opacity: 0, x: 110 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 1.25, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  {...availabilityCardMotion}
                   className="lg:col-span-3 bg-amber-400 rounded-[28px] border-[2.5px] border-[#141413] shadow-[8px_8px_0px_#141413] p-6 flex flex-col justify-between"
                 >
                   <div>
@@ -508,7 +455,6 @@ export default function ConsultationModal({
 
             {/* Crossing Oversized Ribbons ("LET'S CREATE SOMETHING ICONIC") */}
             <div className="mt-16 sm:mt-24 relative w-full py-10 sm:py-16 overflow-hidden">
-              {/* Upper Crossing Band */}
               <div className="relative z-10 w-[126%] -ml-[13%] -rotate-3 bg-[#141413] border-y-4 border-[#141413] shadow-[0px_10px_0px_#2563EB] py-5 sm:py-8 md:py-10 overflow-hidden">
                 <div
                   ref={topRibbonTrackRef}
@@ -530,7 +476,6 @@ export default function ConsultationModal({
                 </div>
               </div>
 
-              {/* Lower Intersecting Cross Band */}
               <div className="relative z-20 -mt-6 sm:-mt-10 w-[126%] -ml-[13%] rotate-3 bg-[#141413] border-y-4 border-[#141413] shadow-[0px_10px_0px_#141413] py-5 sm:py-8 md:py-10 overflow-hidden">
                 <div
                   ref={bottomRibbonTrackRef}
