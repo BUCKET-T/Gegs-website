@@ -31,3 +31,6 @@
   border: 1.5px solid var(--color-charcoal);
   box-shadow: var(--shadow-brutalist);
 }
+html {
+  scroll-behavior: smooth;
+}

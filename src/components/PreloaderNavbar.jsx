@@ -42,7 +42,7 @@ export default function PreloaderNavbar({ onBookFitting }) {
   const navLinks = [
     { name: 'COLLECTIONS', href: '#collections' },
     { name: 'PROCESS', href: '#process' },
-    { name: 'SERVICES', href: '#services' },
+    { name: 'LOOKBOOK', href: '#lookbook' },
     { name: 'CONTACT', href: '#contact' },
   ];
 
