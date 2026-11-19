@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { initLookbookAnimations } from '../animations/LookbookMotion';
 
-// Update these filenames to match your images inside src/assets/
+// Verify the exact file extensions inside src/assets/
 import workLagoonSilkImg from '../assets/backiee-188651-landscape.jpg';
-import workVictoriaWoolImg from '../assets/bmw-m4-gt3-evo-bmw-7680x4320-16968.jpg';
+import workVictoriaWoolImg from '../assets/backiee-296651-landscape.jpg';
 import workIndigoLinenImg from '../assets/wallpaperflare.com_wallpaper (2).jpg';
 import workAtriumCoatImg from '../assets/pexels-mohit-hambiria-92377455-31396372.jpg';
 
@@ -113,47 +113,47 @@ export default function Lookbook() {
     return cleanup;
   }, []);
 
+  const handleImageError = (e) => {
+    e.currentTarget.style.display = 'none';
+  };
+
   return (
     <div ref={containerRef} id="lookbook" className="relative w-full bg-[#FAF6EE] text-[#141413]">
       <section
         ref={sectionRef}
-        className="relative w-full h-screen overflow-hidden flex flex-col justify-between py-6 sm:py-10 select-none bg-[#FAF6EE]"
+        className="relative w-full h-screen overflow-hidden flex flex-col justify-between py-4 sm:py-6 select-none bg-[#FAF6EE]"
       >
-        {/* Top Editorial Header + Gliding Scissor */}
-        <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-10 md:px-16 flex items-center justify-between border-b-2 border-[#141413] pb-3 sm:pb-4">
-          <div>
+        {/* Top Centered Editorial Header */}
+        <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-10 md:px-16 border-b-2 border-[#141413] pb-2.5 sm:pb-3 shrink-0">
+          <div className="lookbook-title-group text-center will-change-[transform,opacity]">
             <span className="font-mono text-[10px] sm:text-xs font-extrabold tracking-[0.25em] uppercase text-blue-600 block">
               PAST WORKS // ARCHIVE
             </span>
-            <h2 className="font-display font-black text-2xl sm:text-4xl md:text-5xl uppercase tracking-tight leading-none mt-1">
+            <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl uppercase tracking-tight leading-none mt-1">
               THE LOOKBOOK
             </h2>
           </div>
+        </div>
 
-          {/* Custom Scissor Motif Gliding Across Works on Scroll */}
-          <div className="lookbook-scissor relative z-30 pointer-events-none will-change-transform">
-            <TailorScissorSvg className="w-16 h-11 sm:w-24 sm:h-16 drop-shadow-[3px_3px_0px_#141413]" />
-          </div>
-
-          <div className="hidden sm:block text-right font-mono text-xs font-extrabold tracking-widest uppercase">
-            SCROLL &rarr;
-          </div>
+        {/* Custom Scissor Anchored Inside Pinned Section */}
+        <div className="lookbook-scissor absolute top-0 left-0 z-30 pointer-events-none will-change-transform">
+          <TailorScissorSvg className="w-14 h-10 sm:w-20 sm:h-14 drop-shadow-[3px_3px_0px_#141413]" />
         </div>
 
         {/* Horizontal Scrub Track */}
-        <div className="relative flex-1 w-full flex items-center overflow-hidden">
+        <div className="relative flex-1 w-full flex items-center overflow-hidden py-2">
           <div
             ref={trackRef}
-            className="flex items-stretch gap-5 sm:gap-8 px-4 sm:px-10 md:px-16 will-change-transform"
+            className="flex items-stretch gap-5 sm:gap-7 px-4 sm:px-10 md:px-16 will-change-transform"
           >
             {PAST_WORKS.map((item) => (
               <article
                 key={item.id}
-                className="lookbook-panel shrink-0 w-[82vw] sm:w-[420px] md:w-[460px] flex"
+                className="lookbook-panel shrink-0 w-[82vw] sm:w-[380px] md:w-[420px] pr-2 pb-2 flex"
               >
-                <div className="lookbook-card w-full bg-white border-2 border-[#141413] shadow-[5px_5px_0px_#141413] sm:shadow-[7px_7px_0px_#141413] flex flex-col justify-between overflow-hidden will-change-[transform,opacity]">
+                <div className="lookbook-card w-full bg-white border-2 border-[#141413] shadow-[4px_4px_0px_#141413] sm:shadow-[6px_6px_0px_#141413] flex flex-col justify-between overflow-hidden will-change-[transform,opacity]">
                   {/* Top Bar */}
-                  <div className="flex items-center justify-between px-4 py-2.5 border-b-2 border-[#141413] font-mono text-[10px] sm:text-xs font-extrabold tracking-wider">
+                  <div className="flex items-center justify-between px-3.5 py-2 border-b-2 border-[#141413] font-mono text-[10px] sm:text-xs font-extrabold tracking-wider shrink-0">
                     <span>NO. {item.id}</span>
                     <span className={`px-2.5 py-0.5 border border-[#141413] rounded-full ${item.accentClass}`}>
                       {item.year}
@@ -161,29 +161,30 @@ export default function Lookbook() {
                   </div>
 
                   {/* Past Work Image */}
-                  <div className="relative w-full h-56 sm:h-72 bg-blue-600/10 border-b-2 border-[#141413] overflow-hidden">
+                  <div className="relative w-full h-36 sm:h-44 md:h-48 bg-blue-600/10 border-b-2 border-[#141413] overflow-hidden shrink-0">
                     <img
                       src={item.image}
                       alt={item.title}
+                      onError={handleImageError}
                       className="w-full h-full object-cover object-center"
                     />
                   </div>
 
                   {/* Editorial Details */}
-                  <div className="p-4 sm:p-6 flex flex-col justify-between flex-1 gap-3">
+                  <div className="p-3.5 sm:p-5 flex flex-col justify-between flex-1 gap-2">
                     <div>
-                      <p className="font-mono text-[10px] sm:text-xs font-extrabold tracking-[0.2em] uppercase text-blue-600">
+                      <p className="font-mono text-[10px] font-extrabold tracking-[0.2em] uppercase text-blue-600">
                         {item.category}
                       </p>
-                      <h3 className="font-display font-black text-xl sm:text-3xl uppercase tracking-tight mt-1 leading-tight">
+                      <h3 className="font-display font-black text-lg sm:text-2xl uppercase tracking-tight mt-0.5 leading-tight">
                         {item.title}
                       </h3>
-                      <p className="font-serif italic text-xs sm:text-sm text-[#141413]/80 mt-2">
+                      <p className="font-serif italic text-xs sm:text-[13px] text-[#141413]/80 mt-1.5 leading-snug">
                         {item.note}
                       </p>
                     </div>
 
-                    <div className="pt-3 border-t border-[#141413]/20 flex items-center justify-between font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider">
+                    <div className="pt-2.5 border-t border-[#141413]/20 flex items-center justify-between font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider shrink-0">
                       <span>{item.mill}</span>
                       <span className="text-blue-600">GEGS STUDIO</span>
                     </div>
@@ -195,7 +196,7 @@ export default function Lookbook() {
         </div>
 
         {/* Bottom Status Strip */}
-        <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-10 md:px-16 pt-2 flex items-center justify-between font-mono text-[10px] sm:text-xs font-extrabold uppercase tracking-[0.2em] text-[#141413]/75">
+        <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-10 md:px-16 pt-1 flex items-center justify-between font-mono text-[10px] sm:text-xs font-extrabold uppercase tracking-[0.2em] text-[#141413]/75 shrink-0">
           <span>LAGOS ISLAND ATELIER</span>
           <span>04 ARCHIVE PIECES</span>
         </div>
