@@ -32,14 +32,14 @@ export function initLookbookAnimations(containerRef, sectionRef, trackRef) {
         force3D: true,
       });
 
-      // First two cards pop in sequentially after the title; others reveal along the scrub
-      panels.forEach((panel, index) => {
+      // Cards start recessed/unhighlighted so each one dynamically pops when scrolled into focus
+      panels.forEach((panel) => {
         const card = panel.querySelector('.lookbook-card');
         if (!card) return;
         gsap.set(card, {
-          opacity: index < 2 ? 0 : 0.92,
-          y: index < 2 ? 32 : 12,
-          scale: index < 2 ? 0.97 : 1,
+          opacity: 0.72,
+          y: 18,
+          scale: 0.96,
           force3D: true,
         });
       });
@@ -72,7 +72,7 @@ export function initLookbookAnimations(containerRef, sectionRef, trackRef) {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 0.16,
+          duration: 0.14,
           ease: 'back.out(1.4)',
         },
         0
@@ -85,12 +85,12 @@ export function initLookbookAnimations(containerRef, sectionRef, trackRef) {
           firstCard,
           {
             opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.18,
+            y: -6,
+            scale: 1.02,
+            duration: 0.16,
             ease: 'power2.out',
           },
-          0.16
+          0.14
         );
       }
 
@@ -101,12 +101,12 @@ export function initLookbookAnimations(containerRef, sectionRef, trackRef) {
           secondCard,
           {
             opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.18,
+            y: -6,
+            scale: 1.02,
+            duration: 0.16,
             ease: 'power2.out',
           },
-          0.34
+          0.3
         );
       }
 
@@ -115,13 +115,48 @@ export function initLookbookAnimations(containerRef, sectionRef, trackRef) {
         track,
         {
           x: -totalShift,
-          duration: 0.56,
+          duration: 0.62,
           ease: 'none',
         },
-        0.44
+        0.38
       );
 
-      // 5. Delay scissor flight until reveal is ~quarter to halfway open, then glide along path
+      // 5. Dynamic spotlight pop for EVERY card as it enters and crosses the active focus band
+      panels.forEach((panel, index) => {
+        const card = panel.querySelector('.lookbook-card');
+        if (!card) return;
+
+        const focusTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: panel,
+            containerAnimation: tl,
+            start: index < 2 ? 'center 75%' : 'left 88%',
+            end: 'right 18%',
+            scrub: true,
+          },
+        });
+
+        focusTl
+          .to(card, {
+            opacity: 1,
+            y: -10,
+            scale: 1.035,
+            boxShadow: '10px 10px 0px #141413',
+            borderColor: '#141413',
+            duration: 0.45,
+            ease: 'power2.out',
+          })
+          .to(card, {
+            opacity: 0.78,
+            y: 8,
+            scale: 0.965,
+            boxShadow: '4px 4px 0px #141413',
+            duration: 0.55,
+            ease: 'power2.inOut',
+          });
+      });
+
+      // 6. Delay scissor flight until reveal is ~quarter to halfway open, then glide along path
       const availableSpan = Math.max(0.2, 0.98 - flightStart);
       const segDuration = availableSpan / points.length;
 
@@ -162,7 +197,7 @@ export function initLookbookAnimations(containerRef, sectionRef, trackRef) {
       });
     });
 
-    // Desktop (>= 640px) — preserved working desktop motion
+    // Desktop (>= 640px) — preserved working desktop motion + dynamic card spotlight
     mm.add('(min-width: 640px)', () => {
       const w = sectionRef.current?.clientWidth || window.innerWidth;
       const h = sectionRef.current?.clientHeight || window.innerHeight;

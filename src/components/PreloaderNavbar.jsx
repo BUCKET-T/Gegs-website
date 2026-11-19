@@ -4,6 +4,7 @@ import emblem from '../assets/icon/gegs-emblem.svg';
 
 export default function PreloaderNavbar({ onBookFitting }) {
   const [hasArrived, setHasArrived] = useState(false);
+  const [isDockedInFlow, setIsDockedInFlow] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -20,7 +21,12 @@ export default function PreloaderNavbar({ onBookFitting }) {
       setHasArrived(true);
     }, 1200);
 
-    // Step 2: Once docked at top-left, slide out the navigation links and CTA button
+    // Step 2: Release fixed positioning once the spring settles into the top-left slot
+    const dockTimer = setTimeout(() => {
+      setIsDockedInFlow(true);
+    }, 1750);
+
+    // Step 3: Once docked at top-left, slide out the navigation links and CTA button
     const revealTimer = setTimeout(() => {
       setIsComplete(true);
     }, 1800);
@@ -28,6 +34,7 @@ export default function PreloaderNavbar({ onBookFitting }) {
     return () => {
       window.removeEventListener('resize', checkViewport);
       clearTimeout(moveTimer);
+      clearTimeout(dockTimer);
       clearTimeout(revealTimer);
     };
   }, []);
@@ -39,9 +46,22 @@ export default function PreloaderNavbar({ onBookFitting }) {
     { name: 'CONTACT', href: '#contact' },
   ];
 
+  const brandMarkContent = (
+    <a href="#" className="flex items-center gap-1.5 sm:gap-2.5 group focus:outline-none">
+      <img
+        src={emblem}
+        alt="GEGS Emblem"
+        className="w-10 h-10 sm:w-16 sm:h-16 object-contain scale-125 transition-transform group-hover:scale-135"
+      />
+      <span className="font-display text-2xl sm:text-4xl tracking-wider uppercase">
+        <span className="text-charcoal">GE</span>
+        <span className="text-blue-600">GS</span>
+      </span>
+    </a>
+  );
+
   return (
-    <header className="w-full bg-alabaster px-4 sm:px-10 md:px-16 py-5 sm:py-6 flex items-center justify-between select-none relative">
-      
+    <header className="w-full bg-alabaster px-4 sm:px-10 md:px-16 py-5 sm:py-6 flex items-center justify-between select-none relative z-30">
       {/* Full-Screen Backdrop Overlay during initial center loading phase */}
       <motion.div
         animate={hasArrived ? { opacity: 0, pointerEvents: 'none' } : { opacity: 1 }}
@@ -49,56 +69,57 @@ export default function PreloaderNavbar({ onBookFitting }) {
         className="fixed inset-0 z-40 bg-alabaster"
       />
 
-      {/* Unified Brand Mark: Smooth diagonal trajectory straight from center to top-left */}
-      <motion.div
-        initial={{
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          x: '-50%',
-          y: '-50%',
-          scale: isMobile ? 1.25 : 1.4,
-        }}
-        animate={
-          hasArrived
-            ? {
-                top: isMobile ? '20px' : '24px',
-                left: isMobile ? '16px' : '40px',
-                x: '0%',
-                y: '0%',
-                scale: 1,
-              }
-            : {
-                top: '50%',
-                left: '50%',
-                x: '-50%',
-                y: '-50%',
-                scale: isMobile ? 1.25 : 1.4,
-              }
-        }
-        transition={{
-          type: 'spring',
-          stiffness: 200,
-          damping: 24,
-          mass: 1.2,
-        }}
-        className="z-50"
-      >
-        <a href="#" className="flex items-center gap-1.5 sm:gap-2.5 group focus:outline-none">
-          <img 
-            src={emblem} 
-            alt="GEGS Emblem" 
-            className="w-10 h-10 sm:w-16 sm:h-16 object-contain scale-125 transition-transform group-hover:scale-135" 
-          />
-          <span className="font-display text-2xl sm:text-4xl tracking-wider uppercase">
-            <span className="text-charcoal">GE</span>
-            <span className="text-blue-600">GS</span>
-          </span>
-        </a>
-      </motion.div>
-
-      {/* Responsive Spacer to preserve layout space for the fixed brand mark */}
-      <div className="w-[115px] sm:w-[220px] shrink-0" />
+      {/* Brand Mark: Glides from center to top-left during preloader, then docks into normal header flow */}
+      {!isDockedInFlow ? (
+        <>
+          <motion.div
+            initial={{
+              position: 'fixed',
+              top: '50%',
+              left: '50%',
+              x: '-50%',
+              y: '-50%',
+              scale: isMobile ? 1.25 : 1.4,
+            }}
+            animate={
+              hasArrived
+                ? {
+                    top: isMobile ? '20px' : '24px',
+                    left: isMobile ? '16px' : '40px',
+                    x: '0%',
+                    y: '0%',
+                    scale: 1,
+                  }
+                : {
+                    top: '50%',
+                    left: '50%',
+                    x: '-50%',
+                    y: '-50%',
+                    scale: isMobile ? 1.25 : 1.4,
+                  }
+            }
+            transition={{
+              type: 'spring',
+              stiffness: 200,
+              damping: 24,
+              mass: 1.2,
+            }}
+            className="z-50"
+          >
+            {brandMarkContent}
+          </motion.div>
+          <div className="w-[115px] sm:w-[220px] shrink-0" />
+        </>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0.95 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
+          className="relative z-20 shrink-0"
+        >
+          {brandMarkContent}
+        </motion.div>
+      )}
 
       {/* Center Desktop Navigation Links */}
       <motion.nav
