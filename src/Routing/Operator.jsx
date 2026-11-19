@@ -2,6 +2,7 @@ import HeroAnimation from '../components/HeroAnimation';
 import PreloaderNavbar from '../components/PreloaderNavbar';
 import GegsIntro from '../components/GegsIntro';
 import Lookbook from '../components/Lookbook';
+import DesignProcess from '../components/DesignProcess';
 
 export default function Operator() {
   return (
@@ -10,6 +11,7 @@ export default function Operator() {
       <GegsIntro />
       <HeroAnimation />
       <Lookbook />
+      <DesignProcess />
     </div>
   );
 }

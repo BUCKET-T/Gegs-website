@@ -197,7 +197,7 @@ export default function Lookbook() {
 
         {/* Bottom Status Strip */}
         <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-10 md:px-16 pt-1 flex items-center justify-between font-mono text-[10px] sm:text-xs font-extrabold uppercase tracking-[0.2em] text-[#141413]/75 shrink-0">
-          <span>LAGOS ISLAND ATELIER</span>
+          <span>THE OGUN ATELIER</span>
           <span>04 ARCHIVE PIECES</span>
         </div>
       </section>
