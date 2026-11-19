@@ -3,6 +3,7 @@ import PreloaderNavbar from '../components/PreloaderNavbar';
 import GegsIntro from '../components/GegsIntro';
 import Lookbook from '../components/Lookbook';
 import DesignProcess from '../components/DesignProcess';
+import ConsultationModal from '../components/ConsultationModal';
 
 export default function Operator() {
   return (
@@ -12,6 +13,7 @@ export default function Operator() {
       <HeroAnimation />
       <Lookbook />
       <DesignProcess />
+      <ConsultationModal />
     </div>
   );
 }
