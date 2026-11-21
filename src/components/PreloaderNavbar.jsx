@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import emblem from '../assets/icon/gegs-emblem.svg';
 
-export default function PreloaderNavbar({ onBookFitting }) {
+export default function PreloaderNavbar({ onBookFitting, isBespoke = false }) {
   const [hasArrived, setHasArrived] = useState(false);
   const [isDockedInFlow, setIsDockedInFlow] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
@@ -46,22 +46,31 @@ export default function PreloaderNavbar({ onBookFitting }) {
     { name: 'CONTACT', href: '#contact' },
   ];
 
+  const textTone = isBespoke ? 'text-[#FAF6EE]' : 'text-charcoal';
+  const emblemTone = isBespoke ? 'invert brightness-200' : '';
+
   const brandMarkContent = (
     <a href="#" className="flex items-center gap-1.5 sm:gap-2.5 group focus:outline-none">
       <img
         src={emblem}
         alt="GEGS Emblem"
-        className="w-10 h-10 sm:w-16 sm:h-16 object-contain scale-125 transition-transform group-hover:scale-135"
+        className={`w-10 h-10 sm:w-16 sm:h-16 object-contain scale-125 transition-all group-hover:scale-135 ${emblemTone}`}
       />
       <span className="font-display text-2xl sm:text-4xl tracking-wider uppercase">
-        <span className="text-charcoal">GE</span>
-        <span className="text-blue-600">GS</span>
+        <span className={`${textTone} transition-colors duration-300`}>GE</span>
+        <span className={`${textTone} transition-colors duration-300`}>GS</span>
       </span>
     </a>
   );
 
   return (
-    <header className="w-full bg-alabaster px-4 sm:px-10 md:px-16 py-5 sm:py-6 flex items-center justify-between select-none relative z-30">
+    <header
+      className={`w-full px-4 sm:px-10 md:px-16 py-5 sm:py-6 flex items-center justify-between select-none transition-colors duration-300 ${
+        isBespoke
+          ? 'absolute top-0 left-0 right-0 z-30 bg-transparent'
+          : 'relative z-30 bg-alabaster'
+      }`}
+    >
       {/* Full-Screen Backdrop Overlay during initial center loading phase */}
       <motion.div
         animate={hasArrived ? { opacity: 0, pointerEvents: 'none' } : { opacity: 1 }}
@@ -130,13 +139,17 @@ export default function PreloaderNavbar({ onBookFitting }) {
             : { opacity: 0, x: -30, filter: 'blur(4px)' }
         }
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="hidden md:flex items-center gap-8 font-mono text-xs font-bold tracking-[0.2em] uppercase text-charcoal"
+        className={`hidden md:flex items-center gap-8 font-mono text-xs font-bold tracking-[0.2em] uppercase transition-colors duration-300 ${textTone}`}
       >
         {navLinks.map((link) => (
           <a
             key={link.name}
             href={link.href}
-            className="relative py-1 hover:text-blue-600 transition-colors after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-charcoal hover:after:w-full after:transition-all"
+            className={`relative py-1 transition-colors after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] hover:after:w-full after:transition-all ${
+              isBespoke
+                ? 'hover:text-amber-300 after:bg-[#FAF6EE]'
+                : 'hover:text-blue-600 after:bg-charcoal'
+            }`}
           >
             {link.name}
           </a>
@@ -172,22 +185,24 @@ export default function PreloaderNavbar({ onBookFitting }) {
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle navigation menu"
           aria-expanded={isMobileMenuOpen}
-          className="md:hidden w-10 h-10 rounded-full bg-alabaster border-[2px] border-charcoal shadow-[3px_3px_0px_#141413] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#141413] flex flex-col items-center justify-center gap-1.5 cursor-pointer focus:outline-none"
+          className={`md:hidden w-10 h-10 rounded-full border-[2px] border-charcoal shadow-[3px_3px_0px_#141413] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#141413] flex flex-col items-center justify-center gap-1.5 cursor-pointer focus:outline-none transition-colors duration-300 ${
+            isBespoke ? 'bg-[#141413] text-[#FAF6EE]' : 'bg-alabaster text-charcoal'
+          }`}
         >
           <span
-            className={`w-4 h-[2px] bg-charcoal transition-transform duration-200 ${
-              isMobileMenuOpen ? 'rotate-45 translate-y-[5px]' : ''
-            }`}
+            className={`w-4 h-[2px] transition-transform duration-200 ${
+              isBespoke ? 'bg-[#FAF6EE]' : 'bg-charcoal'
+            } ${isMobileMenuOpen ? 'rotate-45 translate-y-[5px]' : ''}`}
           />
           <span
-            className={`w-4 h-[2px] bg-charcoal transition-opacity duration-200 ${
-              isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
-            }`}
+            className={`w-4 h-[2px] transition-opacity duration-200 ${
+              isBespoke ? 'bg-[#FAF6EE]' : 'bg-charcoal'
+            } ${isMobileMenuOpen ? 'opacity-0' : 'opacity-100'}`}
           />
           <span
-            className={`w-4 h-[2px] bg-charcoal transition-transform duration-200 ${
-              isMobileMenuOpen ? '-rotate-45 -translate-y-[5px]' : ''
-            }`}
+            className={`w-4 h-[2px] transition-transform duration-200 ${
+              isBespoke ? 'bg-[#FAF6EE]' : 'bg-charcoal'
+            } ${isMobileMenuOpen ? '-rotate-45 -translate-y-[5px]' : ''}`}
           />
         </button>
       </motion.div>
