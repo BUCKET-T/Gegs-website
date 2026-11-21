@@ -85,20 +85,7 @@ export default function HeroAnimation() {
             Silk, wool and hand-dyed linen, sourced from eleven mills and cut in a single studio on Lagos Island.
           </p>
 
-          <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto justify-center">
-            <button
-              type="button"
-              className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-alabaster text-charcoal font-mono text-[11px] sm:text-xs font-extrabold tracking-[0.16em] uppercase border-[2px] border-charcoal shadow-[3px_3px_0px_#141413] sm:shadow-[4px_4px_0px_#141413] cursor-pointer"
-            >
-              VIEW LOOKBOOK
-            </button>
-            <button
-              type="button"
-              className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-amber-500 text-charcoal font-mono text-[11px] sm:text-xs font-extrabold tracking-[0.16em] uppercase border-[2px] border-charcoal shadow-[3px_3px_0px_#141413] sm:shadow-[4px_4px_0px_#141413] cursor-pointer"
-            >
-              CONTACT
-            </button>
-          </div>
+
         </div>
 
       </div>

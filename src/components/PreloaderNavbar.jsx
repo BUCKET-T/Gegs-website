@@ -46,6 +46,24 @@ export default function PreloaderNavbar({ onBookFitting, isBespoke = false }) {
     { name: 'CONTACT', href: '#contact' },
   ];
 
+  const handleBookFittingClick = () => {
+    if (onBookFitting) {
+      onBookFitting();
+      return;
+    }
+
+    const target =
+      document.getElementById('contact') ||
+      document.getElementById('contact-enquiry') ||
+      document.querySelector('[data-contact-enquiry]');
+
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.location.hash = '#contact';
+    }
+  };
+
   const textTone = isBespoke ? 'text-[#FAF6EE]' : 'text-charcoal';
   const emblemTone = isBespoke ? 'invert brightness-200' : '';
 
@@ -170,7 +188,7 @@ export default function PreloaderNavbar({ onBookFitting, isBespoke = false }) {
         {/* Desktop Book Fitting Button */}
         <motion.button
           type="button"
-          onClick={onBookFitting}
+          onClick={handleBookFittingClick}
           whileHover={{ y: -2, boxShadow: '6px 6px 0px #141413' }}
           whileTap={{ x: 2, y: 2, boxShadow: '2px 2px 0px #141413' }}
           transition={{ type: 'spring', stiffness: 500, damping: 30 }}
@@ -233,7 +251,7 @@ export default function PreloaderNavbar({ onBookFitting, isBespoke = false }) {
               type="button"
               onClick={() => {
                 setIsMobileMenuOpen(false);
-                if (onBookFitting) onBookFitting();
+                handleBookFittingClick();
               }}
               className="mt-2 w-full py-3 rounded-full bg-emerald-600 text-white font-mono text-xs font-extrabold tracking-[0.16em] uppercase border-[2px] border-charcoal shadow-[3px_3px_0px_#141413] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#141413] cursor-pointer text-center"
             >
