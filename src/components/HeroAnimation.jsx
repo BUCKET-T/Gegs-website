@@ -84,8 +84,6 @@ export default function HeroAnimation() {
           <p className="font-serif italic text-xs sm:text-base text-alabaster/90 max-w-xs sm:max-w-md text-center sm:text-left">
             Silk, wool and hand-dyed linen, sourced from eleven mills and cut in a single studio on Lagos Island.
           </p>
-
-
         </div>
 
       </div>

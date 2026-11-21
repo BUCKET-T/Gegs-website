@@ -197,31 +197,42 @@ export default function PreloaderNavbar({ onBookFitting, isBespoke = false }) {
           BOOK FITTING
         </motion.button>
 
-        {/* Mobile Hamburger Button */}
+        {/* Mobile Hamburger / Close Button */}
         <button
           type="button"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle navigation menu"
           aria-expanded={isMobileMenuOpen}
-          className={`md:hidden w-10 h-10 rounded-full border-[2px] border-charcoal shadow-[3px_3px_0px_#141413] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#141413] flex flex-col items-center justify-center gap-1.5 cursor-pointer focus:outline-none transition-colors duration-300 ${
+          className={`md:hidden w-10 h-10 rounded-full border-[2px] border-charcoal shadow-[3px_3px_0px_#141413] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#141413] flex items-center justify-center shrink-0 cursor-pointer focus:outline-none transition-colors duration-300 ${
             isBespoke ? 'bg-[#141413] text-[#FAF6EE]' : 'bg-alabaster text-charcoal'
           }`}
         >
-          <span
-            className={`w-4 h-[2px] transition-transform duration-200 ${
-              isBespoke ? 'bg-[#FAF6EE]' : 'bg-charcoal'
-            } ${isMobileMenuOpen ? 'rotate-45 translate-y-[5px]' : ''}`}
-          />
-          <span
-            className={`w-4 h-[2px] transition-opacity duration-200 ${
-              isBespoke ? 'bg-[#FAF6EE]' : 'bg-charcoal'
-            } ${isMobileMenuOpen ? 'opacity-0' : 'opacity-100'}`}
-          />
-          <span
-            className={`w-4 h-[2px] transition-transform duration-200 ${
-              isBespoke ? 'bg-[#FAF6EE]' : 'bg-charcoal'
-            } ${isMobileMenuOpen ? '-rotate-45 -translate-y-[5px]' : ''}`}
-          />
+          {isMobileMenuOpen ? (
+            <svg
+              viewBox="0 0 24 24"
+              className="w-4 h-4 block"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            >
+              <path d="M6 6L18 18" />
+              <path d="M18 6L6 18" />
+            </svg>
+          ) : (
+            <svg
+              viewBox="0 0 24 24"
+              className="w-4 h-4 block"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            >
+              <path d="M4 7H20" />
+              <path d="M4 12H20" />
+              <path d="M4 17H20" />
+            </svg>
+          )}
         </button>
       </motion.div>
 

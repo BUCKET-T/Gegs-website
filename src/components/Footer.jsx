@@ -169,7 +169,7 @@ export default function Footer() {
           if (e.key === 'ArrowRight') setMeasureCm((prev) => Math.min(MAX_CM, Number((prev + 1).toFixed(1))));
           if (e.key === 'ArrowLeft') setMeasureCm((prev) => Math.max(0, Number((prev - 1).toFixed(1))));
         }}
-        className="hidden sm:block relative w-full h-16 bg-amber-400 border-b-[3px] border-[#141413] cursor-ew-resize overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-600"
+        className="hidden sm:block relative w-full h-16 bg-charcoal border-b-[3px] border-[#141413] cursor-ew-resize overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-600"
       >
         <div className="absolute inset-x-0 top-0 h-full flex items-start justify-between px-4 pointer-events-none">
           {Array.from({ length: TICK_COUNT }, (_, idx) => {
@@ -179,12 +179,12 @@ export default function Footer() {
             return (
               <div key={cmVal} className="flex flex-col items-center">
                 <span
-                  className={`w-[2px] bg-[#141413] ${
+                  className={`w-[2px] bg-[#f5f5f3] ${
                     isMajor ? 'h-7' : isMid ? 'h-5' : 'h-3'
                   }`}
                 />
                 {isMajor && (
-                  <span className="font-mono text-[10px] font-black tracking-tighter mt-1 text-[#141413]">
+                  <span className="font-mono text-[10px] font-black tracking-tighter mt-1 text-[#dfdfdb]">
                     {cmVal}
                   </span>
                 )}
@@ -221,7 +221,7 @@ export default function Footer() {
           <div className="lg:col-span-6">
             <div className="flex items-center justify-between gap-3 mb-3">
               <span className="font-mono text-[10px] sm:text-xs font-extrabold tracking-[0.2em] uppercase text-[#141413]/80">
-                WOVEN ATELIER LABEL // NO. 001-LAGOS
+                WOVEN ATELIER LABEL // NO. 001-OGUN
               </span>
 
               <motion.button
