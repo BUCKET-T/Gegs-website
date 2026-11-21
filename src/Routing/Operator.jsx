@@ -4,6 +4,7 @@ import GegsIntro from '../components/GegsIntro';
 import Lookbook from '../components/Lookbook';
 import DesignProcess from '../components/DesignProcess';
 import ConsultationModal from '../components/ConsultationModal';
+import Footer from '../components/Footer';
 
 export default function Operator() {
   return (
@@ -14,6 +15,7 @@ export default function Operator() {
       <Lookbook />
       <DesignProcess />
       <ConsultationModal />
+      <Footer />
     </div>
   );
 }
