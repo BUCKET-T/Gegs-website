@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { initHeroAnimations } from '../animations/HeroAnimationMotion';
-import emblem from '../assets/icon/gegs-emblem.svg';
+import emblem from '../assets/icon/gegs-emblem night.svg';
 
 export default function HeroAnimation() {
   const containerRef = useRef(null);
@@ -15,7 +15,7 @@ export default function HeroAnimation() {
     <div ref={containerRef} className="relative z-50 w-full h-[350vh] sm:h-[400vh] bg-blue-600">
       <div
         ref={sectionRef}
-        className="sticky top-0 w-full h-screen bg-blue-600 text-alabaster flex flex-col justify-between px-4 sm:px-12 md:px-20 py-6 sm:py-12 select-none overflow-hidden"
+        className="sticky top-0 w-full h-screen bg-charcoal text-alabaster flex flex-col justify-between px-4 sm:px-12 md:px-20 py-6 sm:py-12 select-none overflow-hidden"
       >
         {/* Clean Wave Divider Background */}
         <div 
@@ -59,10 +59,10 @@ export default function HeroAnimation() {
             <div className="petal-badge badge-top-left absolute z-30 bg-alabaster text-charcoal px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full font-mono text-[8px] sm:text-xs font-extrabold tracking-wider shadow-[2px_2px_0px_#141413] sm:shadow-[3px_3px_0px_#141413] border-[1.5px] border-charcoal will-change-[transform,opacity] whitespace-nowrap">
               LOOKBOOK
             </div>
-            <div className="petal-badge badge-top-right absolute z-30 bg-amber-500 text-charcoal px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full font-mono text-[8px] sm:text-xs font-extrabold tracking-wider shadow-[2px_2px_0px_#141413] sm:shadow-[3px_3px_0px_#141413] border-[1.5px] border-charcoal will-change-[transform,opacity] whitespace-nowrap">
+            <div className="petal-badge badge-top-right absolute z-30 bg-amber-500 text-charcoal px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full font-mono text-[8px] sm:text-xs font-extrabold tracking-wider shadow-[2px_2px_0px_#141413] sm:shadow-[3px_3px_0px_#ffff] border-[1.5px] border-charcoal will-change-[transform,opacity] whitespace-nowrap">
               11 MILLS
             </div>
-            <div className="petal-badge badge-bottom-left absolute z-30 bg-amber-500 text-charcoal px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full font-mono text-[8px] sm:text-xs font-extrabold tracking-wider shadow-[2px_2px_0px_#141413] sm:shadow-[3px_3px_0px_#141413] border-[1.5px] border-charcoal will-change-[transform,opacity] whitespace-nowrap">
+            <div className="petal-badge badge-bottom-left absolute z-30 bg-amber-500 text-charcoal px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full font-mono text-[8px] sm:text-xs font-extrabold tracking-wider shadow-[2px_2px_0px_#141413] sm:shadow-[3px_3px_0px_#ffff] border-[1.5px] border-charcoal will-change-[transform,opacity] whitespace-nowrap">
               LAGOS
             </div>
             <div className="petal-badge badge-bottom-right absolute z-30 bg-alabaster text-charcoal px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full font-mono text-[8px] sm:text-xs font-extrabold tracking-wider shadow-[2px_2px_0px_#141413] sm:shadow-[3px_3px_0px_#141413] border-[1.5px] border-charcoal will-change-[transform,opacity] whitespace-nowrap">
