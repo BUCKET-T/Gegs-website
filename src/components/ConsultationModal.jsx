@@ -326,7 +326,7 @@ export default function ConsultationModal({
                               value={fullName}
                               onChange={(e) => setFullName(e.target.value)}
                               placeholder="Your Name"
-                              className="w-full px-4 py-3 rounded-xl bg-[#FAF6EE] border-2 border-[#141413] font-mono text-xs sm:text-sm text-[#141413] placeholder:text-[#141413]/40 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                              className="w-full px-4 py-3 rounded-xl bg-[#FAF6EE] border-2 border-[#141413] font-mono text-xs sm:text-sm text-[#141413] placeholder:text-[#141413]/40 focus:outline-none focus:none focus:none"
                             />
                           </div>
 
@@ -345,7 +345,7 @@ export default function ConsultationModal({
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
                               placeholder="you@example.com"
-                              className="w-full px-4 py-3 rounded-xl bg-[#FAF6EE] border-2 border-[#141413] font-mono text-xs sm:text-sm text-[#141413] placeholder:text-[#141413]/40 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                              className="w-full px-4 py-3 rounded-xl bg-[#FAF6EE] border-2 border-[#141413] font-mono text-xs sm:text-sm text-[#141413] placeholder:text-[#141413]/40 focus:outline-none focus:none focus: none"
                             />
                           </div>
                         </div>
@@ -438,7 +438,7 @@ export default function ConsultationModal({
                             value={vision}
                             onChange={(e) => setVision(e.target.value)}
                             placeholder="Silhouette, occasion, fabric preferences..."
-                            className="w-full px-4 py-3 rounded-xl bg-[#FAF6EE] border-2 border-[#141413] font-mono text-xs sm:text-sm text-[#141413] placeholder:text-[#141413]/40 focus:outline-none focus:ring-2 focus:ring-blue-600 resize-none"
+                            className="w-full px-4 py-3 rounded-xl bg-[#FAF6EE] border-2 border-[#141413] font-mono text-xs sm:text-sm text-[#141413] placeholder:text-[#141413]/40 focus:outline-none focus:none focus:none resize-none"
                           />
                         </div>
 

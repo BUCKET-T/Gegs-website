@@ -169,7 +169,7 @@ export default function Footer() {
           if (e.key === 'ArrowRight') setMeasureCm((prev) => Math.min(MAX_CM, Number((prev + 1).toFixed(1))));
           if (e.key === 'ArrowLeft') setMeasureCm((prev) => Math.max(0, Number((prev - 1).toFixed(1))));
         }}
-        className="hidden sm:block relative w-full h-16 bg-charcoal border-b-[3px] border-[#141413] cursor-ew-resize overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-600"
+        className="hidden sm:block relative w-full h-16 bg-charcoal border-b-[3px] border-[#141413] cursor-ew-resize overflow-hidden focus:outline-none focus:ring-2 focus:none"
       >
         <div className="absolute inset-x-0 top-0 h-full flex items-start justify-between px-4 pointer-events-none">
           {Array.from({ length: TICK_COUNT }, (_, idx) => {
