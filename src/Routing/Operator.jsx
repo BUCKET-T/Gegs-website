@@ -13,7 +13,7 @@ import Collections from '../pages/Collections';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function HomeView({ isBespoke, setIsBespoke, operatorRef,}) {
+function HomeView({ isBespoke, setIsBespoke, operatorRef, onBookFitting }) {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.utils.toArray('.atelier-reveal').forEach((el) => {
@@ -43,30 +43,37 @@ function HomeView({ isBespoke, setIsBespoke, operatorRef,}) {
   }, [operatorRef]);
 
   return (
-    <main className="flex-1 flex flex-col">
-      <GegsIntro
+    <>
+      <PreloaderNavbar
         isBespoke={isBespoke}
-        onBespokeChange={setIsBespoke}
+        onBookFitting={onBookFitting}
       />
 
-      <div className="atelier-reveal">
-        <HeroAnimation />
-      </div>
+      <main className="flex-1 flex flex-col">
+        <GegsIntro
+          isBespoke={isBespoke}
+          onBespokeChange={setIsBespoke}
+        />
 
-      <div id="lookbook" className="atelier-reveal">
-        <Lookbook />
-      </div>
+        <div className="atelier-reveal">
+          <HeroAnimation />
+        </div>
 
-      <div id="process" className="atelier-reveal">
-        <DesignProcess />
-      </div>
+        <div id="lookbook" className="atelier-reveal">
+          <Lookbook />
+        </div>
 
-      <ConsultationModal />
+        <div id="process" className="atelier-reveal">
+          <DesignProcess />
+        </div>
 
-      <div id="contact">
-        <Footer />
-      </div>
-    </main>
+        <ConsultationModal />
+
+        <div id="contact">
+          <Footer />
+        </div>
+      </main>
+    </>
   );
 }
 
@@ -90,11 +97,6 @@ export default function Operator() {
         ref={operatorRef}
         className="min-h-screen bg-alabaster text-charcoal flex flex-col overflow-x-clip"
       >
-        <PreloaderNavbar
-          isBespoke={isBespoke}
-          onBookFitting={handleBookFitting}
-        />
-
         <Routes>
           <Route
             path="/"
@@ -103,7 +105,7 @@ export default function Operator() {
                 isBespoke={isBespoke}
                 setIsBespoke={setIsBespoke}
                 operatorRef={operatorRef}
-                handleBookFitting={handleBookFitting}
+                onBookFitting={handleBookFitting}
               />
             }
           />
