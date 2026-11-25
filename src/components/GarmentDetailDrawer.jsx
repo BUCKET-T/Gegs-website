@@ -19,7 +19,7 @@ export default function GarmentDetailDrawer({
   // Sync colorway and reset form state whenever the drawer opens for a garment
   useEffect(() => {
     if (isOpen && item) {
-      setSelectedColorIdx(initialColorIndex || 0);
+      
       setSelectedAngle('front');
       setSelectedSize(item.sizes?.[1] || item.sizes?.[0] || 'M');
       setIsSubmitted(false);
@@ -51,7 +51,6 @@ export default function GarmentDetailDrawer({
   const angleOptions = [
     { id: 'front', label: 'FRONT', src: activeColorway?.frontImg },
     { id: 'back', label: 'BACK', src: activeColorway?.backImg },
-    { id: 'side', label: 'PROFILE', src: activeColorway?.sideImg },
   ].filter((angle) => Boolean(angle.src));
 
   const handleSubmitEnquiry = (e) => {
@@ -99,14 +98,14 @@ export default function GarmentDetailDrawer({
             <div className="flex items-center justify-between px-4 sm:px-8 py-4 border-b-[2px] border-charcoal bg-[#FAF6EE]">
               <div className="flex items-center gap-2.5 font-mono text-[11px] sm:text-xs font-extrabold tracking-[0.2em] uppercase">
                 <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-600 border border-charcoal" />
-                <span>{item.code || 'ATELIER PIECE'} // MADE TO ORDER</span>
+                <span>{item.code || 'ATELIER PIECE'}</span>
               </div>
 
               <button
                 type="button"
                 onClick={onClose}
                 aria-label="Close detail sheet"
-                className="px-3.5 py-1.5 rounded-full bg-alabaster text-charcoal border-[2px] border-charcoal shadow-[3px_3px_0px_#141413] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#141413] font-mono text-xs font-extrabold tracking-[0.16em] uppercase cursor-pointer focus:outline-none"
+                className="px-3.5 py-1.5 rounded-full bg-charcoal  text-alabaster border-[2px] border-charcoal shadow-[3px_3px_0px_#141413] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#141413] font-mono text-xs font-extrabold tracking-[0.16em] uppercase cursor-pointer focus:outline-none"
               >
                 CLOSE ✕
               </button>
@@ -217,7 +216,7 @@ export default function GarmentDetailDrawer({
                         SELECT SIZE
                       </span>
                       <span className="font-mono text-[10px] font-bold tracking-[0.16em] uppercase text-emerald-700">
-                        IN STOCK / BESPOKE AVAILABLE
+                        IN STOCK
                       </span>
                     </div>
 

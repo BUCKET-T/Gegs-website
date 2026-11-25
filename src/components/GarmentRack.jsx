@@ -17,11 +17,11 @@ export default function GarmentRack({
   const isBlurred = selectedIndex !== null;
 
   const marqueeItems = [
-    'GEGS ATELIER COLLECTIONS',
+    'GEGS',
     'CRAFTED IN SMALL BATCHES',
     'BESPOKE FITTING BY APPOINTMENT',
     'FRONT & BACK INSPECTOR',
-    'LAGOS / STUDIO ARCHIVE',
+    'OGUN / STUDIO ARCHIVE',
   ];
 
   return (
@@ -35,7 +35,7 @@ export default function GarmentRack({
       <div className="w-full px-4 sm:px-10 md:px-16 pt-2 pb-3 flex items-center justify-between gap-4">
         <div className="flex flex-col gap-1">
           <span className="font-mono text-[11px] sm:text-xs font-extrabold tracking-[0.22em] uppercase text-charcoal">
-            ATELIER RACK // HOVER FOR FRONT VIEW // CLICK TO INSPECT
+            THE COLATION
           </span>
           <span className="font-mono text-[11px] font-bold tracking-[0.16em] uppercase text-charcoal/65">
             {activeItem
@@ -49,21 +49,21 @@ export default function GarmentRack({
         </span>
       </div>
 
-      {/* Center Stage: Bold Garment rack.webp Rod + Garments Hung Directly On It */}
-      <div className="relative flex-1 flex flex-col items-center justify-center px-4 sm:px-10 md:px-16 py-6 min-h-[410px] sm:min-h-[480px]">
+      {/* Center Stage: Proportionate Rod + Tightly Packed Trimmed Garments */}
+      <div className="relative flex-1 flex flex-col items-center justify-center px-4 sm:px-10 md:px-16 py-6 min-h-[430px] sm:min-h-[520px]">
         <div className="relative w-full max-w-5xl mx-auto flex flex-col items-center">
-          <div className="relative w-full max-w-4xl flex flex-col items-center">
-            {/* Bold Garment rack.webp Rod (z-20 so hanger hooks tuck behind the bar) */}
+          <div className="relative w-full max-w-xl sm:max-w-2xl flex flex-col items-center">
+            {/* Rod Layer (z-20 so hanger hooks sit cleanly behind the bar) */}
             <div className="relative w-full h-24 sm:h-32 flex items-center justify-center z-20 pointer-events-none select-none">
               <img
                 src={RACK_IMAGE}
                 alt="GEGS Garment Rack"
-                className="w-full h-full object-contain scale-x-[1.18] contrast-125 brightness-95 drop-shadow-[0_6px_12px_rgba(20,20,19,0.25)]"
+                className="w-full h-full object-fill contrast-125 brightness-95 drop-shadow-[0_6px_12px_rgba(20,20,19,0.25)]"
               />
             </div>
 
-            {/* Garments Hung Right On the Rod (z-10, zero gap) */}
-            <div className="w-full -mt-14 sm:-mt-[74px] px-6 sm:px-12 grid grid-cols-4 gap-2 sm:gap-6 items-start justify-items-center z-10">
+            {/* Tightly Packed Garments Using Natural Trimmed Widths (z-10) */}
+            <div className="-mt-14 sm:-mt-[74px] flex items-start justify-center gap-1 sm:gap-2 z-10">
               {items.map((item, idx) => {
                 const primaryColor = item.colorways?.[0];
                 const restingImg =
@@ -77,7 +77,8 @@ export default function GarmentRack({
 
                 const isHovered = hoveredIndex === idx;
                 const isSelected = selectedIndex === idx;
-                const displaySrc = isHovered || isSelected ? hoverImg : restingImg;
+                const isActive = isHovered || isSelected;
+                const displaySrc = isActive ? hoverImg : restingImg;
 
                 return (
                   <motion.button
@@ -94,13 +95,15 @@ export default function GarmentRack({
                       isHovered
                         ? {
                             y: [0, -2, 2, -1.5, 1, 0],
-                            rotate: [0, -4, 3.5, -2.5, 1.2, 0],
-                            scale: 1.1,
+                            rotate: [0, -3, 2.5, -1.5, 0.8, 0],
+                            scale: 1.14,
+                            zIndex: 30,
                           }
                         : {
                             y: isSelected ? -2 : 0,
                             rotate: 0,
-                            scale: isSelected ? 1.05 : 1,
+                            scale: isSelected ? 1.08 : 1,
+                            zIndex: isSelected ? 25 : 10,
                           }
                     }
                     transition={
@@ -116,12 +119,16 @@ export default function GarmentRack({
                           }
                     }
                     style={{ transformOrigin: 'top center' }}
-                    className="group relative flex flex-col items-center cursor-pointer focus:outline-none w-full max-w-[165px] sm:max-w-[205px]"
+                    className="group relative flex flex-col items-center cursor-pointer focus:outline-none shrink-0"
                   >
                     <img
                       src={displaySrc}
                       alt={item.name}
-                      className="w-full h-44 sm:h-64 md:h-72 object-contain object-top drop-shadow-[0_12px_16px_rgba(20,20,19,0.22)]"
+                      className={`w-auto object-contain object-top transition-[height] duration-200 drop-shadow-[0_12px_16px_rgba(20,20,19,0.22)] ${
+                        isActive
+                          ? 'h-64 sm:h-80 md:h-[340px]'
+                          : 'h-60 sm:h-72 md:h-80'
+                      }`}
                     />
                   </motion.button>
                 );
@@ -152,7 +159,7 @@ export default function GarmentRack({
           {[...marqueeItems, ...marqueeItems].map((entry, i) => (
             <span key={`${entry}-${i}`} className="inline-flex items-center gap-8">
               <span>{entry}</span>
-              <span aria-hidden="true">///</span>
+              <span aria-hidden="true">//</span>
             </span>
           ))}
         </motion.div>

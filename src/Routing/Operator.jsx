@@ -13,7 +13,7 @@ import Collections from '../pages/Collections';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function HomeView({ isBespoke, setIsBespoke, operatorRef, handleBookFitting }) {
+function HomeView({ isBespoke, setIsBespoke, operatorRef,}) {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.utils.toArray('.atelier-reveal').forEach((el) => {

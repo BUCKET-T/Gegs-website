@@ -3,7 +3,7 @@ import { COLLECTIONS } from '../data/collectionsData';
 import GarmentRack from '../components/GarmentRack';
 import GarmentInspector from '../components/GarmentInspector';
 import GarmentDetailDrawer from '../components/GarmentDetailDrawer';
-import Footer from '../components/Footer';
+
 
 export default function Collections() {
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -56,10 +56,6 @@ export default function Collections() {
           console.log('GEGS Fitting Enquiry:', enquiryPayload);
         }}
       />
-
-      <div id="contact">
-        <Footer />
-      </div>
     </>
   );
 }
