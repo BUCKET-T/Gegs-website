@@ -55,6 +55,8 @@ export default function GarmentInspector({
       ? activeColorway?.backImg || activeColorway?.frontImg
       : activeColorway?.frontImg || activeColorway?.sideImg;
 
+  const isBackFlip = viewSide === 'back';
+
   return (
     <AnimatePresence>
       {isOpen && currentItem && (
@@ -109,22 +111,49 @@ export default function GarmentInspector({
 
             {/* Garment Artwork + Floating Colorway Mini-Hangers */}
             <div className="relative flex items-center justify-center w-full max-w-xl mx-auto px-12 sm:px-16">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`${currentItem.id}-${colorIndex}-${viewSide}`}
-                  initial={{ opacity: 0, scale: 0.92, y: 14 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.94, y: -10 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 26 }}
-                  className="relative w-full max-h-[54vh] sm:max-h-[60vh] aspect-[3/4] flex items-center justify-center"
-                >
-                  <img
-                    src={displayedImage}
-                    alt={`${currentItem.name} (${viewSide} view)`}
-                    className="w-full h-full object-contain drop-shadow-[0_22px_28px_rgba(20,20,19,0.28)]"
-                  />
-                </motion.div>
-              </AnimatePresence>
+              <div
+                style={{ perspective: '1200px' }}
+                className="relative w-full max-h-[54vh] sm:max-h-[60vh] aspect-[3/4] flex items-center justify-center"
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={`${currentItem.id}-${colorIndex}-${viewSide}`}
+                    initial={{
+                      opacity: 0,
+                      rotateY: isBackFlip ? 85 : -85,
+                      scale: 0.96,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      rotateY: 0,
+                      scale: 1,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      rotateY: isBackFlip ? -85 : 85,
+                      scale: 0.96,
+                    }}
+                    transition={{
+                      type: 'spring',
+                      stiffness: 260,
+                      damping: 22,
+                      mass: 0.85,
+                    }}
+                    style={{
+                      transformOrigin: '50% 10%',
+                      transformStyle: 'preserve-3d',
+                      backfaceVisibility: 'hidden',
+                    }}
+                    className="w-full h-full flex items-center justify-center"
+                  >
+                    <img
+                      src={displayedImage}
+                      alt={`${currentItem.name} (${viewSide} view)`}
+                      className="w-full h-full object-contain drop-shadow-[0_22px_28px_rgba(20,20,19,0.28)]"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
 
               {/* Floating Colorway Mini-Hangers (Top-Right of Garment) */}
               {colorways.length > 0 && (

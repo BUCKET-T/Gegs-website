@@ -150,7 +150,7 @@ export default function GarmentRack({
       </div>
 
       {/* Bottom Continuous Marquee Ticker */}
-      <div className="w-full border-t-[2px] border-b-[2px] border-charcoal bg-emerald-600 text-white py-2 overflow-hidden select-none">
+      <div className="w-full border-t-[2px] border-b-[2px] border-charcoal bg-cahrcoal text-white py-2 overflow-hidden select-none">
         <motion.div
           className="flex w-max items-center gap-8 font-mono text-[11px] sm:text-xs font-extrabold tracking-[0.22em] uppercase"
           animate={{ x: ['0%', '-50%'] }}

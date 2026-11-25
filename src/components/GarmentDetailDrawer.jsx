@@ -19,7 +19,7 @@ export default function GarmentDetailDrawer({
   // Sync colorway and reset form state whenever the drawer opens for a garment
   useEffect(() => {
     if (isOpen && item) {
-      
+      setSelectedColorIdx(initialColorIndex);
       setSelectedAngle('front');
       setSelectedSize(item.sizes?.[1] || item.sizes?.[0] || 'M');
       setIsSubmitted(false);
@@ -105,7 +105,7 @@ export default function GarmentDetailDrawer({
                 type="button"
                 onClick={onClose}
                 aria-label="Close detail sheet"
-                className="px-3.5 py-1.5 rounded-full bg-charcoal  text-alabaster border-[2px] border-charcoal shadow-[3px_3px_0px_#141413] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#141413] font-mono text-xs font-extrabold tracking-[0.16em] uppercase cursor-pointer focus:outline-none"
+                className="px-3.5 py-1.5 rounded-full bg-charcoal text-alabaster border-[2px] border-charcoal shadow-[3px_3px_0px_#141413] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#141413] font-mono text-xs font-extrabold tracking-[0.16em] uppercase cursor-pointer focus:outline-none"
               >
                 CLOSE ✕
               </button>
@@ -115,17 +115,42 @@ export default function GarmentDetailDrawer({
             <div className="grid grid-cols-1 md:grid-cols-2">
               {/* LEFT COLUMN: Garment Visual Stage + Angle Thumbnails */}
               <div className="relative bg-[#F3EDE0] border-b-[2px] md:border-b-0 md:border-r-[2px] border-charcoal p-5 sm:p-8 flex flex-col justify-between">
-                <div className="relative w-full aspect-[3/4] max-h-[360px] sm:max-h-[430px] mx-auto flex items-center justify-center">
-                  <AnimatePresence mode="wait">
+                <div
+                  style={{ perspective: '1100px' }}
+                  className="relative w-full aspect-[3/4] max-h-[360px] sm:max-h-[430px] mx-auto flex items-center justify-center"
+                >
+                  <AnimatePresence mode="wait" initial={false}>
                     <motion.img
                       key={`${item.id}-${selectedColorIdx}-${selectedAngle}`}
                       src={mainImage}
                       alt={`${item.name} - ${selectedAngle}`}
-                      initial={{ opacity: 0, scale: 0.94 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.2 }}
-                      className="w-full h-full object-contain drop-shadow-[0_18px_24px_rgba(20,20,19,0.22)]"
+                      initial={{
+                        opacity: 0,
+                        rotateY: selectedAngle === 'back' ? 85 : -85,
+                        scale: 0.96,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        rotateY: 0,
+                        scale: 1,
+                      }}
+                      exit={{
+                        opacity: 0,
+                        rotateY: selectedAngle === 'back' ? -85 : 85,
+                        scale: 0.96,
+                      }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 260,
+                        damping: 22,
+                        mass: 0.85,
+                      }}
+                      style={{
+                        transformOrigin: '50% 10%',
+                        transformStyle: 'preserve-3d',
+                        backfaceVisibility: 'hidden',
+                      }}
+                      className="w-full h-full object-contain drop-shadow-[0_18px_24px_rgba(20,20,19,0.22)] select-none"
                     />
                   </AnimatePresence>
                 </div>
