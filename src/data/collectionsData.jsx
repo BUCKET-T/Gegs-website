@@ -1,18 +1,22 @@
-import colorSide from '../assets/Cloth Rack/shirt side/Color gegs side.png';
-import colorFront from '../assets/Cloth Rack/shirt front/color gegs front.png';
-import colorBack from '../assets/Cloth Rack/shirt back/Color gegs back.png';
+import rackImg from '../assets/Cloth Rack/Garment rack.webp';
 
-import jesusSide from '../assets/Cloth Rack/shirt side/jesus gegs side.png';
-import jesusFront from '../assets/Cloth Rack/shirt front/jesus gegs front.png';
-import jesusBack from '../assets/Cloth Rack/shirt back/jesus gegs back.png';
+import colorSide from '../assets/Cloth Rack/shirt side/color gegs side.webp';
+import colorFront from '../assets/Cloth Rack/shirt front/color gegs front.webp';
+import colorBack from '../assets/Cloth Rack/shirt back/Color gegs back.webp';
 
-import poloSide from '../assets/Cloth Rack/shirt side/polo gegs side.png';
-import poloFront from '../assets/Cloth Rack/shirt front/polo gegs front.png';
-import poloBack from '../assets/Cloth Rack/shirt back/polo gegs back.png';
+import jesusSide from '../assets/Cloth Rack/shirt side/jesus gegs side.webp';
+import jesusFront from '../assets/Cloth Rack/shirt front/jesus gegs front.webp';
+import jesusBack from '../assets/Cloth Rack/shirt back/jesus gegs back.webp';
 
-import senatorSide from '../assets/Cloth Rack/shirt side/senator gegs side.png';
-import senatorFront from '../assets/Cloth Rack/shirt front/senator gegs front.png';
-import senatorBack from '../assets/Cloth Rack/shirt back/senator gegs back.png';
+import poloSide from '../assets/Cloth Rack/shirt side/polo gegs side.webp';
+import poloFront from '../assets/Cloth Rack/shirt front/polo gegs front.webp';
+import poloBack from '../assets/Cloth Rack/shirt back/polo gegs back.webp';
+
+import senatorSide from '../assets/Cloth Rack/shirt side/senator gegs side.webp';
+import senatorFront from '../assets/Cloth Rack/shirt front/senator gegs front.webp';
+import senatorBack from '../assets/Cloth Rack/shirt back/senator gegs back.webp';
+
+export const RACK_IMAGE = rackImg;
 
 export const COLLECTIONS = [
   {

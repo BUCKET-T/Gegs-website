@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import emblem from '../assets/icon/gegs-emblem.svg';
 
 export default function PreloaderNavbar({ onBookFitting, isBespoke = false }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [hasArrived, setHasArrived] = useState(false);
   const [isDockedInFlow, setIsDockedInFlow] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
@@ -40,11 +44,56 @@ export default function PreloaderNavbar({ onBookFitting, isBespoke = false }) {
   }, []);
 
   const navLinks = [
-    { name: 'COLLECTIONS', href: '#collections' },
-    { name: 'PROCESS', href: '#process' },
-    { name: 'LOOKBOOK', href: '#lookbook' },
-    { name: 'CONTACT', href: '#contact' },
+    { name: 'COLLECTIONS', type: 'route', to: '/collections' },
+    { name: 'PROCESS', type: 'section', hash: '#process' },
+    { name: 'LOOKBOOK', type: 'section', hash: '#lookbook' },
+    { name: 'CONTACT', type: 'section', hash: '#contact' },
   ];
+
+  const scrollToHash = (hash) => {
+    const id = hash.replace('#', '');
+    const target =
+      document.getElementById(id) ||
+      (id === 'contact'
+        ? document.getElementById('contact-enquiry') ||
+          document.querySelector('[data-contact-enquiry]')
+        : null);
+
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.location.hash = hash;
+    }
+  };
+
+  const handleNavClick = (e, link) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+
+    if (link.type === 'route') {
+      navigate(link.to);
+      return;
+    }
+
+    if (location.pathname !== '/') {
+      navigate('/');
+      window.setTimeout(() => {
+        scrollToHash(link.hash);
+      }, 120);
+    } else {
+      scrollToHash(link.hash);
+    }
+  };
+
+  const handleBrandClick = (e) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+    if (location.pathname !== '/') {
+      navigate('/');
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   const handleBookFittingClick = () => {
     if (onBookFitting) {
@@ -52,15 +101,13 @@ export default function PreloaderNavbar({ onBookFitting, isBespoke = false }) {
       return;
     }
 
-    const target =
-      document.getElementById('contact') ||
-      document.getElementById('contact-enquiry') ||
-      document.querySelector('[data-contact-enquiry]');
-
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (location.pathname !== '/') {
+      navigate('/');
+      window.setTimeout(() => {
+        scrollToHash('#contact');
+      }, 120);
     } else {
-      window.location.hash = '#contact';
+      scrollToHash('#contact');
     }
   };
 
@@ -68,7 +115,11 @@ export default function PreloaderNavbar({ onBookFitting, isBespoke = false }) {
   const emblemTone = isBespoke ? 'invert brightness-200' : '';
 
   const brandMarkContent = (
-    <a href="#" className="flex items-center gap-1.5 sm:gap-2.5 group focus:outline-none">
+    <a
+      href="/"
+      onClick={handleBrandClick}
+      className="flex items-center gap-1.5 sm:gap-2.5 group focus:outline-none"
+    >
       <img
         src={emblem}
         alt="GEGS Emblem"
@@ -159,19 +210,28 @@ export default function PreloaderNavbar({ onBookFitting, isBespoke = false }) {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className={`hidden md:flex items-center gap-8 font-mono text-xs font-bold tracking-[0.2em] uppercase transition-colors duration-300 ${textTone}`}
       >
-        {navLinks.map((link) => (
-          <a
-            key={link.name}
-            href={link.href}
-            className={`relative py-1 transition-colors after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] hover:after:w-full after:transition-all ${
-              isBespoke
-                ? 'hover:text-amber-300 after:bg-[#FAF6EE]'
-                : 'hover:text-blue-600 after:bg-charcoal'
-            }`}
-          >
-            {link.name}
-          </a>
-        ))}
+        {navLinks.map((link) => {
+          const href = link.type === 'route' ? link.to : link.hash;
+          const isCurrentRoute =
+            link.type === 'route' && location.pathname === link.to;
+
+          return (
+            <a
+              key={link.name}
+              href={href}
+              onClick={(e) => handleNavClick(e, link)}
+              className={`relative py-1 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] hover:after:w-full after:transition-all ${
+                isCurrentRoute ? 'after:w-full text-emerald-600' : 'after:w-0'
+              } ${
+                isBespoke
+                  ? 'hover:text-amber-300 after:bg-[#FAF6EE]'
+                  : 'hover:text-blue-600 after:bg-charcoal'
+              }`}
+            >
+              {link.name}
+            </a>
+          );
+        })}
       </motion.nav>
 
       {/* Desktop Book Fitting CTA + Mobile Hamburger Toggle */}
@@ -246,16 +306,19 @@ export default function PreloaderNavbar({ onBookFitting, isBespoke = false }) {
             transition={{ duration: 0.25, ease: 'easeOut' }}
             className="md:hidden absolute top-full left-4 right-4 mt-2 p-5 rounded-2xl bg-alabaster border-[2.5px] border-charcoal shadow-[6px_6px_0px_#141413] z-40 flex flex-col gap-4 font-mono text-xs font-bold tracking-[0.2em] uppercase text-charcoal"
           >
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="py-2 border-b border-charcoal/10 hover:text-blue-600 transition-colors"
-              >
-                {link.name}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const href = link.type === 'route' ? link.to : link.hash;
+              return (
+                <a
+                  key={link.name}
+                  href={href}
+                  onClick={(e) => handleNavClick(e, link)}
+                  className="py-2 border-b border-charcoal/10 hover:text-blue-600 transition-colors"
+                >
+                  {link.name}
+                </a>
+              );
+            })}
 
             {/* Book Fitting Button inside Mobile Menu Drawer */}
             <button
