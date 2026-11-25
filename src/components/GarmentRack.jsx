@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { RACK_IMAGE } from '../data/collectionsData';
+import gegsEmblem from '../assets/icon/gegs-emblem.svg';
 
 export default function GarmentRack({
   items = [],
@@ -32,8 +34,8 @@ export default function GarmentRack({
       }`}
     >
       {/* Top Rack Header */}
-      <div className="w-full px-4 sm:px-10 md:px-16 pt-2 pb-3 flex items-center justify-between gap-4">
-        <div className="flex flex-col gap-1">
+      <div className="relative w-full px-4 sm:px-10 md:px-16 pt-4 pb-4 min-h-[76px] sm:min-h-[96px] flex items-center justify-between gap-4">
+        <div className="flex flex-col gap-1 z-10">
           <span className="font-mono text-[11px] sm:text-xs font-extrabold tracking-[0.22em] uppercase text-charcoal">
             THE COLATION
           </span>
@@ -44,7 +46,20 @@ export default function GarmentRack({
           </span>
         </div>
 
-        <span className="px-3.5 py-1.5 rounded-full bg-alabaster text-charcoal border-[2px] border-charcoal shadow-[3px_3px_0px_#141413] font-mono text-[11px] sm:text-xs font-extrabold tracking-[0.18em] uppercase shrink-0">
+        {/* Top-Center Bold GS Emblem */}
+        <Link
+          to="/"
+          aria-label="GEGS Home"
+          className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center hover:scale-105 transition-transform focus:outline-none"
+        >
+          <img
+            src={gegsEmblem}
+            alt="GS Emblem"
+            className="h-16 sm:h-20 md:h-24 w-auto object-contain select-none contrast-200 drop-shadow-[0_0_0.75px_#141413] drop-shadow-[0.75px_0_0_#141413]"
+          />
+        </Link>
+
+        <span className="z-10 px-3.5 py-1.5 rounded-full bg-alabaster text-charcoal border-[2px] border-charcoal shadow-[3px_3px_0px_#141413] font-mono text-[11px] sm:text-xs font-extrabold tracking-[0.18em] uppercase shrink-0">
           {items.length} PIECES
         </span>
       </div>

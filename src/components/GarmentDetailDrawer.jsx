@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/meagzndy';
+
 export default function GarmentDetailDrawer({
   isOpen = false,
   item = null,
@@ -14,6 +16,8 @@ export default function GarmentDetailDrawer({
   const [clientName, setClientName] = useState('');
   const [clientContact, setClientContact] = useState('');
   const [notes, setNotes] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Sync colorway and reset form state whenever the drawer opens for a garment
@@ -22,6 +26,7 @@ export default function GarmentDetailDrawer({
       setSelectedColorIdx(initialColorIndex);
       setSelectedAngle('front');
       setSelectedSize(item.sizes?.[1] || item.sizes?.[0] || 'M');
+      setSubmitError('');
       setIsSubmitted(false);
     }
   }, [isOpen, item, initialColorIndex]);
@@ -53,12 +58,17 @@ export default function GarmentDetailDrawer({
     { id: 'back', label: 'BACK', src: activeColorway?.backImg },
   ].filter((angle) => Boolean(angle.src));
 
-  const handleSubmitEnquiry = (e) => {
+  const handleSubmitEnquiry = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
+    setSubmitError('');
+    setIsSubmitting(true);
 
     const payload = {
       garmentId: item.id,
       garmentName: item.name,
+      garmentCode: item.code || '',
       price: item.price,
       colorway: activeColorway?.label || 'PRIMARY',
       size: selectedSize,
@@ -67,11 +77,46 @@ export default function GarmentDetailDrawer({
       notes: notes.trim(),
     };
 
-    if (onBookFitting) {
-      onBookFitting(payload);
-    }
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: payload.clientName,
+          contact: payload.clientContact,
+          garment: `${payload.garmentName} (${payload.garmentCode || payload.garmentId})`,
+          colorway: payload.colorway,
+          size: payload.size,
+          price: payload.price,
+          notes: payload.notes || 'None',
+          _subject: `GEGS Fitting Request — ${payload.garmentName} (${payload.size})`,
+        }),
+      });
 
-    setIsSubmitted(true);
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        const message =
+          data?.errors?.map((err) => err.message).join(', ') ||
+          'Could not send your fitting request. Please try again.';
+        throw new Error(message);
+      }
+
+      onBookFitting?.(payload);
+      setClientName('');
+      setClientContact('');
+      setNotes('');
+      setIsSubmitted(true);
+    } catch (err) {
+      setSubmitError(
+        err?.message || 'Network error while sending request. Please try again.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -289,6 +334,7 @@ export default function GarmentDetailDrawer({
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <input
                         type="text"
+                        name="name"
                         required
                         value={clientName}
                         onChange={(e) => setClientName(e.target.value)}
@@ -297,6 +343,7 @@ export default function GarmentDetailDrawer({
                       />
                       <input
                         type="text"
+                        name="contact"
                         required
                         value={clientContact}
                         onChange={(e) => setClientContact(e.target.value)}
@@ -307,19 +354,30 @@ export default function GarmentDetailDrawer({
 
                     <input
                       type="text"
+                      name="notes"
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
                       placeholder="PREFERRED FITTING DATE OR NOTES (OPTIONAL)"
                       className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF6EE] border-[2px] border-charcoal font-mono text-xs font-bold tracking-[0.12em] text-charcoal placeholder:text-charcoal/45 focus:outline-none focus:ring-2 focus:ring-blue-600"
                     />
 
+                    {submitError && (
+                      <p
+                        role="alert"
+                        className="font-mono text-xs font-bold text-red-700 bg-red-100 border-[2px] border-charcoal rounded-xl px-3.5 py-2"
+                      >
+                        {submitError}
+                      </p>
+                    )}
+
                     <motion.button
                       type="submit"
-                      whileHover={{ y: -2, boxShadow: '6px 6px 0px #141413' }}
-                      whileTap={{ x: 2, y: 2, boxShadow: '2px 2px 0px #141413' }}
-                      className="w-full py-3.5 rounded-full bg-emerald-600 text-white font-mono text-xs sm:text-sm font-extrabold tracking-[0.18em] uppercase border-[2px] border-charcoal shadow-[4px_4px_0px_#141413] cursor-pointer focus:outline-none"
+                      disabled={isSubmitting}
+                      whileHover={isSubmitting ? undefined : { y: -2, boxShadow: '6px 6px 0px #141413' }}
+                      whileTap={isSubmitting ? undefined : { x: 2, y: 2, boxShadow: '2px 2px 0px #141413' }}
+                      className="w-full py-3.5 rounded-full bg-emerald-600 disabled:opacity-65 text-white font-mono text-xs sm:text-sm font-extrabold tracking-[0.18em] uppercase border-[2px] border-charcoal shadow-[4px_4px_0px_#141413] cursor-pointer disabled:cursor-not-allowed focus:outline-none"
                     >
-                      REQUEST FITTING // {selectedSize}
+                      {isSubmitting ? 'SENDING REQUEST...' : `REQUEST FITTING // ${selectedSize}`}
                     </motion.button>
                   </form>
                 )}
