@@ -21,7 +21,7 @@ export default function GarmentRack({
     'CRAFTED IN SMALL BATCHES',
     'BESPOKE FITTING BY APPOINTMENT',
     'FRONT & BACK INSPECTOR',
-    'OGUN / STUDIO ARCHIVE',
+    'OGUN STUDIO ARCHIVE',
   ];
 
   return (
