@@ -26,6 +26,12 @@ export default function GarmentRack({
     'OGUN STUDIO ARCHIVE',
   ];
 
+  const handleAvailabilityClick = () => {
+    const targetIndex = activeIndex ?? 0;
+    onSelectGarment?.(targetIndex);
+    
+  };
+
   return (
     <section
       aria-label="Garment rack"
@@ -37,12 +43,12 @@ export default function GarmentRack({
       <div className="relative w-full px-4 sm:px-10 md:px-16 pt-4 pb-4 min-h-[76px] sm:min-h-[96px] flex items-center justify-between gap-4">
         <div className="flex flex-col gap-1 z-10">
           <span className="font-mono text-[11px] sm:text-xs font-extrabold tracking-[0.22em] uppercase text-charcoal">
-            THE COLATION
+            THE ENSEMBLE
           </span>
           <span className="font-mono text-[11px] font-bold tracking-[0.16em] uppercase text-charcoal/65">
             {activeItem
               ? `${activeItem.code} — ${activeItem.name} (${activeItem.price})`
-              : 'MOVE CURSOR OVER A PIECE ON THE ROD'}
+              : 'GLIDE THROUGH THE RACK'}
           </span>
         </div>
 
@@ -155,10 +161,10 @@ export default function GarmentRack({
           <div className="mt-8">
             <button
               type="button"
-              onClick={() => onOpenAvailability?.(activeIndex ?? 0)}
+              onClick={handleAvailabilityClick}
               className="px-6 py-2 rounded-full bg-alabaster text-charcoal border-[2px] border-charcoal shadow-[3px_3px_0px_#141413] hover:bg-emerald-600 hover:text-white hover:-translate-y-0.5 active:translate-x-[1px] active:translate-y-[1px] font-mono text-[11px] font-extrabold tracking-[0.18em] uppercase cursor-pointer transition-all"
             >
-              SEE AVAILABILITY
+              UP CLOSE VIEW?
             </button>
           </div>
         </div>
